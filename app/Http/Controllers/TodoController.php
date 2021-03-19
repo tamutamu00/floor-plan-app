@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Todo;
 use App\Floor;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -13,11 +14,12 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($floor)
     {
-        $todos = Todo::all();
-        $floors = Floor::all();
-        return view('todos.index', compact('todos', 'floors'));
+        $todos = Todo::where('floor_id', $floor);
+        $floors = Floor::where('id', $floor);
+        $floor_id = $floor;
+        return view('todos.index', compact('todos', 'floors', 'floor_id'));
     }
 
     /**
@@ -38,17 +40,18 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
         $todo = new Todo();
         $todo->content = $request->input('content');
         $todo->description = $request->input('description');
-        $todo->user_id = $request->input('user_id');
+        $todo->user_id = Auth::id();
         $todo->floor_id = $request->input('floor_id');
         $todo->expired_at = $request->input('expired_at');
         $todo->save();
 
-        return redirect('todos')->with(
+
+        return redirect()->route('/floors/{floor}/todos', ['floor' => $floor_id])->with(
             'status',
             $todo->content . 'を登録しました'
         );

@@ -18,18 +18,20 @@
                         <tr>
                             <th>id</th>
                             <th>name</th>
-                            <th>user_id</th>
+                            {{-- <th>user_id</th> --}}
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($floors as $floor)
                         <tr>
+                            @csrf
                             <td>{{ $floor->id }}</td>
                             <td>{{ $floor->name }}</td>
-                            <td>{{ $floor->user_id }}</td>
-                            <td><a href="{{ url('floors/' . $floor->id) }}" class="btn btn-info">詳細</a></td>
+                            {{-- <td>{{ $floor->user_id }}</td> --}}
+                            <td><a href="{{ route('floors.todos.index',['floor' => $floor->id]) }}" class="btn btn-info">タスク</a></td>
                             <td><a href="{{ url('floors/' . $floor->id . '/edit') }}" class="btn btn-primary">編集</a></td>
+
                             <td>
                                 <form method="POST" action="/floors/{{ $floor->id }}">
                                     @csrf

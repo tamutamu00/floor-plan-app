@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Floor;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $floors = Floor::where('user_id', Auth::id())->get();
+
+
+
+        return view('floors.index', compact('floors'));
+
     }
+        // return view('home');
+
+
+
 }

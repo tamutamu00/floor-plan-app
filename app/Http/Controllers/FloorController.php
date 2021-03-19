@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Floor;
+use Illuminate\Support\Facades\Auth;
 
 class FloorController extends Controller
 {
@@ -40,10 +41,11 @@ class FloorController extends Controller
     {
         $floor = new Floor();
         $floor->name = $request->input('name');
-        $floor->user_id = $request->input('user_id');
+        $floor->user_id = Auth::id();
         $floor->save();
+        dd($floor);
 
-        return redirect('floors')->with(
+        return redirect('home')->with(
             'status',
             $floor->name . 'を登録しました'
         );
