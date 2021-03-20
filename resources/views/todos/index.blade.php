@@ -20,7 +20,7 @@
                             <th>content</th>
                             <th>description</th>
                             {{-- <th>user_id</th> --}}
-                            {{-- <th>floor_id（間取り）</th> --}}
+                            <th>floor_id（間取り）</th>
                             <th>expired_at（期限）</th>
                         </tr>
                     </thead>
@@ -31,13 +31,15 @@
                             <td>{{ $todo->content }}</td>
                             <td>{{ $todo->description }}</td>
                             <td>{{ $todo->floor->name }}</td>
+
                             {{-- <td>{{ $todo->user_id }}</td> --}}
                             {{-- <td>{{ $todo->floor_id }}</td> --}}
                             <td>{{ $todo->expired_at }}</td>
-                            <td><a href="{{ url('todos/' . $todo->id) }}" class="btn btn-info">詳細</a></td>
-                            <td><a href="{{ url('todos/' . $todo->id . '/edit') }}" class="btn btn-primary">編集</a></td>
+                            {{-- <td><a href="{{ url('todos/' . $todo->id) }}" class="btn btn-info">詳細</a></td> --}}
+                            <td><a href="{{ route('floors.todos.edit', ['floor' => $floor_id, 'todo' => $todo]) }}" class="btn btn-primary">編集</a></td>
                             <td>
-                                <form method="POST" action="/todos/{{ $todo->id }}">
+                                <form method="POST" action="
+                                {{ route('floors.todos.destroy', ['floor' => $floor_id, 'todo' => $todo]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger" type="submit">削除</button>

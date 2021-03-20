@@ -43,7 +43,7 @@ class FloorController extends Controller
         $floor->name = $request->input('name');
         $floor->user_id = Auth::id();
         $floor->save();
-        dd($floor);
+        
 
         return redirect('home')->with(
             'status',

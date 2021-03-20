@@ -18,7 +18,7 @@ class TodoController extends Controller
     {
         $todos = Todo::where('floor_id', $floor)->get();
         $floor_id = $floor;
-        
+
         return view('todos.index', compact('todos','floor_id'));
 
     }
@@ -32,7 +32,6 @@ class TodoController extends Controller
     {
         // $floors = Floor::select('name')->get();
         $floors = Floor::all();
-        $floor_id = $floor;
 
 
 
@@ -67,11 +66,12 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $floor)
     {
         $todo = Todo::find($id);
 
-        return view('todos.show', compact('todo'));
+
+        return view('todos.show', ['todo' => $todo, 'floor' => $floor]);
     }
 
     /**
@@ -80,15 +80,16 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($floor, $todo)
     {
-        $todo = Todo::find($id);
-        // $todo_floor_id = Todo::find($name);
-        $floors = Floor::all();
-        // dd($floor->name);
 
-        return view('todos/edit', ['todo' => $todo, 'floors'=> $floors,]); #'todo_floor_id' => $todo_floor_id
+        $todo_data = Todo::find($todo);
+        // dd($todo_data);
+        // $todo = Todo::find($id);
+
+        return view('todos/edit', ['todo' => $todo_data, 'floor_id' => $floor]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -97,19 +98,21 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $floor, $todo)
     {
-        $todo = Todo::find($id);
+        $todo_data = Todo::find($todo);
 
-        $todo->content = $request->input('content');
-        $todo->description = $request->input('description');
-        $todo->floor_id = $request->input('floor_id');
-        $todo->expired_at = $request->input('expired_at');
-        $todo->save();
 
-        return redirect('todos')->with(
+        $todo_data->content = $request->input('content');
+        $todo_data->description = $request->input('description');
+        $todo_data->floor_id = $floor;
+        $todo_data->expired_at = $request->input('expired_at');
+        $todo_data->save();
+
+
+        return redirect()->route('floors.todos.index', ['floor' => $floor])->with(
             'status',
-            $todo->content . 'を更新しました'
+            $todo_data->content . 'を更新しました'
         );
     }
 
@@ -119,12 +122,13 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($floor, $todo)
     {
-        $todo = Todo::find($id);
+        $todo = Todo::find($todo);
+        
         $todo->delete();
 
-        return redirect('todos')->with(
+        return redirect()->route('floors.todos.index', ['floor' => $floor])->with(
             'status',
             $todo->content . 'を更新しました'
         );

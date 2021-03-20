@@ -26,7 +26,7 @@
                                 @foreach ($floors as $floor)
                                     <option value="{{$floor->name}}">{{$floor->name}}</option>
                                 @endforeach
-                            </select>　
+                            </select>
                         </div> --}}
 
 
