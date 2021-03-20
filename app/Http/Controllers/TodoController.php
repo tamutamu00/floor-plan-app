@@ -16,10 +16,11 @@ class TodoController extends Controller
      */
     public function index($floor)
     {
-        $todos = Todo::where('floor_id', $floor);
-        $floors = Floor::where('id', $floor);
+        $todos = Todo::where('floor_id', $floor)->get();
         $floor_id = $floor;
-        return view('todos.index', compact('todos', 'floors', 'floor_id'));
+        
+        return view('todos.index', compact('todos','floor_id'));
+
     }
 
     /**
@@ -27,12 +28,15 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($floor)
     {
         // $floors = Floor::select('name')->get();
         $floors = Floor::all();
+        $floor_id = $floor;
 
-        return view('todos.create', ['floors' => $floors]);
+
+
+        return view('todos.create', ['floors' => $floors, 'floor_id' => $floor]);
     }
     /**
      * Store a newly created resource in storage.
@@ -40,18 +44,18 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request )
+    public function store(Request $request, $floor)
     {
         $todo = new Todo();
         $todo->content = $request->input('content');
         $todo->description = $request->input('description');
         $todo->user_id = Auth::id();
-        $todo->floor_id = $request->input('floor_id');
+        $todo->floor_id = $floor;
         $todo->expired_at = $request->input('expired_at');
         $todo->save();
 
 
-        return redirect()->route('/floors/{floor}/todos', ['floor' => $floor_id])->with(
+        return redirect()->route('floors.todos.index', ['floor' => $floor])->with(
             'status',
             $todo->content . 'を登録しました'
         );

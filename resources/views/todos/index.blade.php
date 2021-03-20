@@ -30,6 +30,7 @@
                             <td>{{ $todo->id }}</td>
                             <td>{{ $todo->content }}</td>
                             <td>{{ $todo->description }}</td>
+                            <td>{{ $todo->floor->name }}</td>
                             {{-- <td>{{ $todo->user_id }}</td> --}}
                             {{-- <td>{{ $todo->floor_id }}</td> --}}
                             <td>{{ $todo->expired_at }}</td>

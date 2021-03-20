@@ -7,7 +7,7 @@
                 登録画面
             </div>
             <div class="card-body">
-                <form method="POST" action="/floors/{floor}/todos">
+                <form method="POST" action="{{route('floors.todos.store', ['floor' => $floor_id])}}">
                     @csrf
                     <div class="form-group">
                         <label for="title" class="control-label">content</label>

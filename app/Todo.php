@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Todo extends Model
 {
-    // return $this->belongsTo('App\Floor');
+    public function floor()
+    {
+        return $this->belongsTo('App\Floor');
+    }
 }
