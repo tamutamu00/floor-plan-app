@@ -29,7 +29,7 @@ class HomeController extends Controller
         $floors = Floor::where('user_id', Auth::id())->get();
 
 
-
+        
         return view('floors.index', compact('floors'));
 
     }

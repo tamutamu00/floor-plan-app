@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Floor;
 use Illuminate\Support\Facades\Auth;
+use App\Todo;
 
 class FloorController extends Controller
 {
@@ -16,7 +17,7 @@ class FloorController extends Controller
      */
     public function index()
     {
-        $floors = Floor::all();
+        $floors = Floor::where('user_id', auth::id());
 
         return view('floors.index', compact('floors'));
     }
@@ -43,7 +44,7 @@ class FloorController extends Controller
         $floor->name = $request->input('name');
         $floor->user_id = Auth::id();
         $floor->save();
-        
+
 
         return redirect('home')->with(
             'status',
@@ -103,9 +104,12 @@ class FloorController extends Controller
     public function destroy($id)
     {
         $floor = Floor::find($id);
+        $todos = todo::where('floor_id', $id)->get();
+        $todos->each->delete();
         $floor->delete();
+        // $floor->delete();
 
-        return redirect('floors')->with(
+        return redirect('home')->with(
             'status',
             $floor->name . 'を削除しました'
         );

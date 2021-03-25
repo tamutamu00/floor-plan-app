@@ -16,7 +16,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>id</th>
+                            {{-- <th>id</th> --}}
                             <th>name</th>
                             {{-- <th>user_id</th> --}}
                             <th></th>
@@ -26,7 +26,7 @@
                         @foreach($floors as $floor)
                         <tr>
                             @csrf
-                            <td>{{ $floor->id }}</td>
+                            {{-- <td>{{ $floor->id }}</td> --}}
                             <td>{{ $floor->name }}</td>
                             {{-- <td>{{ $floor->user_id }}</td> --}}
                             <td><a href="{{ route('floors.todos.index',['floor' => $floor->id]) }}" class="btn btn-info">タスク</a></td>
