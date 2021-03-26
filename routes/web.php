@@ -27,3 +27,7 @@ Route::resource('/floors', 'FloorController');
 Route::resource('floors.todos', 'TodoController');
 
 Route::resource('/home', 'HomeController');
+
+if (env('APP_ENV') === 'production') {
+    URL::forceScheme('https');
+}
