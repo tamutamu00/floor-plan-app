@@ -38,11 +38,11 @@
                         </div> --}}
                         {{-- <input class="form-control" name="floor_id" type="text" value="{{ $todo->floor_id }}"> --}}
 
-                        <label for="title" class="control-label">expired_at(
+                        <label for="title" class="control-label, col-md-4">expired_at(
                             期限）
                         </label>
-                        <input class="form-control" name="expired_at" type="date" value="
-                        {{ $todo->expired_at }}">
+                        <input class="form-control,col-xs-4" name="expired_at" type="date" value="
+                        {{ date('n月j日', strtotime($todo->expired_at)) }}">
 
                     </div>
                     <hr>

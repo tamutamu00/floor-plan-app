@@ -1,7 +1,10 @@
 @extends("layouts.app")
 @section('content')
 <div class="row">
-    <div class="col-12">
+    <div class="col">
+        <p>floor面</p>
+    </div>
+    <div class="col">
         <div class="card">
             <div class="card-header">
                 一覧表示
@@ -17,7 +20,7 @@
                     <thead>
                         <tr>
                             {{-- <th>id</th> --}}
-                            <th>name</th>
+                            <th>場所</th>
                             {{-- <th>user_id</th> --}}
                             <th></th>
                         </tr>
