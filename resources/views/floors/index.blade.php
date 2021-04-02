@@ -2,7 +2,29 @@
 @section('content')
 <div class="row">
     <div class="col">
-        <p>floor面</p>
+        <div class="card">
+            <div class="card-header">
+                部屋選択
+            </div>
+            <div class="card-body">
+                <a href="{{ url('floors/create') }}" class="btn btn-success mb-3">登録</a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>自分の家の間取り</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($floors as $floor)
+                            <tr>
+                                @csrf
+                                <td><a href="{{route('floors.todos.index',['floor' => $floor->id])}}">{{$floor->name}}</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col">
         <div class="card">

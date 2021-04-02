@@ -18,8 +18,12 @@ class TodoController extends Controller
     {
         $todos = Todo::where('floor_id', $floor)->get();
         $floor_id = $floor;
+        $floor_data = Floor::where('id', $floor_id)->first();
+        $floors = Floor::where('user_id', auth::id())->get();
+        $now = date('Y/m/d H:i:s');
 
-        return view('todos.index', compact('todos','floor_id'));
+
+        return view('todos.index', compact('todos','floor_id', 'floor_data', 'floors', 'now'));
 
     }
 
@@ -125,7 +129,7 @@ class TodoController extends Controller
     public function destroy($floor, $todo)
     {
         $todo = Todo::find($todo);
-        
+
         $todo->delete();
 
         return redirect()->route('floors.todos.index', ['floor' => $floor])->with(

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeColumnToIntTodosTable extends Migration
+class AddFinishedColumnToTodosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class ChangeColumnToIntTodosTable extends Migration
     public function up()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->integer('floor_id')->change();
+            $table->integer('finished')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class ChangeColumnToIntTodosTable extends Migration
     public function down()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->text('floor_id')->change();
+            $table->dropColumn('finished');
         });
     }
 }

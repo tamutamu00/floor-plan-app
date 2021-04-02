@@ -5,6 +5,31 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
+                    部屋選択
+                </div>
+                <div class="card-body">
+                    <a href="{{ url('floors/create') }}" class="btn btn-success mb-3">登録</a>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>自分の家の間取り</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($floors as $floor)
+                                <tr>
+                                    @csrf
+                                    <td><a href="{{route('floors.todos.index',['floor' => $floor->id])}}">{{$floor->name}}</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
                     一覧画面
                 </div>
                 <div class="card-body">
@@ -13,6 +38,7 @@
                         {{ session('status') }}
                     </div>
                     @endif
+                    <div>{{$floor_data->name}}</div>
                     <a href="{{ route('floors.todos.create', ['floor' => $floor_id]) }}" class="btn btn-success mb-3">登録</a>
                     <table class="table">
                         <thead>
@@ -36,6 +62,9 @@
                                 {{-- <td>{{ $todo->user_id }}</td> --}}
                                 {{-- <td>{{ $todo->floor_id }}</td> --}}
                                 <td>{{ date('n月j日', strtotime($todo->expired_at)) }}</td>
+                                @if ($now <= $todo->expired_at)
+                                    <td class="text-warning">{{ date('n月j日', strtotime($todo->expired_at)) }}</td>
+                                @endif
                                 {{-- <td><a href="{{ url('todos/' . $todo->id) }}" class="btn btn-info">詳細</a></td> --}}
                                 <td><a href="{{ route('floors.todos.edit', ['floor' => $floor_id, 'todo' => $todo]) }}" class="btn btn-primary">編集</a></td>
                                 <td>
